@@ -1,0 +1,29 @@
+{
+  "posts": [
+    {
+      "id": "7176",
+      "title": "Hello World!",
+      "author": "Pranav Bhatia"
+    },
+    {
+      "id": "306f",
+      "title": "",
+      "author": ""
+    },
+    {
+      "id": "a73d",
+      "title": "TEST 2",
+      "author": "TEST..."
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

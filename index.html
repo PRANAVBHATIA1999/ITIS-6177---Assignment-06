@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pranav Bhatia - Week03</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" class="form-control">
+            </div>
+            <div class="col-xs-12">
+                <label for="author">Author</label>
+                <input type="text" name="author" id="author" class="form-control">
+            </div>
+            <div class="col-xs-12">
+                <button type="submit" onclick="sendPost()" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12" id="list" style="margin-top: 20px;">
+                <button type="button" class="btn btn-success" onclick="getPosts()">Get Posts</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.10.0/axios.min.js"
+        integrity="sha512-WkZrEcQ5LMyNy6Y2PQf+Tu3vMcsmKKRKuPXtJSTHQJ3mpuvLRlA5dlDDhrrcXfyWr6Z/y3wIMfjfqVFO/gDZYQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+
+
+        function sendPost() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+
+            const req = {
+                title,
+                author
+            };
+
+            axios.post('http://localhost:3000/posts', req)
+                .then(function (response) {
+                    console.log(response);
+
+                    // clear input fields
+                    document.getElementById('title').value = '';
+                    document.getElementById('title').focus();
+                    document.getElementById('author').value = '';
+
+                    // refresh the posts list
+                    getPosts();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+
+
+        function getPosts() {
+            axios.get('http://127.0.0.1:3000/posts')
+                .then(function (response) {
+                    const list = document.getElementById('list');
+                    if (response && response.data) {
+                        list.innerHTML = '';
+                        response.data.forEach(function (post) {
+                            list.innerHTML += `${post.title} - ${post.author}<br><br>`;
+                        });
+                    }
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+
+
+        getPosts();
+
+    </script>
+
+
+
+</body>
+
+</html>
